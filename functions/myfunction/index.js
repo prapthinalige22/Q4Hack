@@ -41,7 +41,7 @@
         const { id: recordId } = await context.org.dataApi.create(account);
 
         // Query Accounts using the SalesforceSDK DataApi to verify that your new Account was created.
-        const soql = `SELECT Fields(STANDARD) FROM Account WHERE Id = '${recordId}'`;
+        const soql = `SELECT Fields(STANDARD) FROM Account`;// WHERE Id = '${recordId}'`;
         const queryResults = await context.org.dataApi.query(soql);
         return queryResults;
     } catch (err) {
