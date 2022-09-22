@@ -1,7 +1,1 @@
-{
-    "name": "MyAccount",
-    "accountNumber": "123456789",
-    "industry": "Technology",
-    "type": "Prospect",
-    "website": "www.salesforce.com"
-}
+{"totalindirect":6.0,"totaldirect":5.0,"loanAmount":100.0,"borrowerType":"Guarantor","borrower":"0013t00002VpiN8AAJ"}
