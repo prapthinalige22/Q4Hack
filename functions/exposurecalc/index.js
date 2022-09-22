@@ -42,6 +42,8 @@
         }
     });
 
+const a=0;
+
     try {
         // Insert the record using the SalesforceSDK DataApi and get the new Record Id from the result
         const { id: recordId } = await context.org.dataApi.commitUnitOfWork(uow);
