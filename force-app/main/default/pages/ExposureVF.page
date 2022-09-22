@@ -1,0 +1,224 @@
+<apex:page Controller="Loanlist">
+<script>   
+   twistSection(document.getElementById('{!$Component.theForm.thePageBlock.section2}').getElementsByTagName('img')[0])
+ </script>
+   <apex:pageBlock title="EXPOSURE SUMMARY">
+   
+       <div style="text-align:left;font-size: 13px;font-weight : bold;">
+          <apex:outputLabel value="Total Exposure : " /> 
+          <apex:outputField value="{!account.Total_Exposure__c}" />  <br/>
+          <br> </br>
+          <apex:outputLabel value="Total Liability : " /> 
+          <apex:outputField value="{!account.Total_Liability__c}" />  <br/>
+         
+        </div>
+        
+   </apex:pageBlock>   
+   <apex:pageBlock id="block1" title="DIRECT EXPOSURE">
+
+   <style>
+            body .bPageBlock .pbBody .grey .pbSubheader{
+                background-color:#c0c0c0;
+            }
+            body .bPageBlock .pbBody .grey .pbSubheader h3{
+                color:#000;
+            }
+   </style>
+   
+   <apex:outputPanel styleClass="grey" layout="block">
+      <apex:pageBlockSection id="section1" collapsible="true" title="Total Direct Exposure" columns="1"  >
+      <apex:pageBlockTable value="{!loanlist}" var="loan" >
+      <apex:column headerClass="headerstyle" headerValue="Name">
+      <apex:outputLink value="/{!loan.id}" target="_blank">   
+      <apex:outputField value="{!loan.Name}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower',true,false)}" style="display: {!IF(ISBLANK(loan.Name), 'none', 'table-row')};"/> 
+      </apex:outputLink>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Product" >
+      <apex:outputField value="{!loan.Product__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Stage" >
+      <apex:outputField value="{!loan.Stage__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Type" >
+      <apex:outputField value="{!loan.Type__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Loan Amount" >
+      <apex:outputField value="{!loan.Loan_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower',true,false)}"/>
+      </apex:column>     
+      <apex:column headerClass="headerstyle" headerValue="Exposure Amount" >
+      <apex:outputField value="{!loan.Exposure_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower',true,false)}"/>
+      </apex:column>     
+      </apex:pageBlockTable>
+      </apex:pageBlockSection>
+    <script>
+        twistSection(document.getElementById('{!$Component.block1.section1}').getElementsByTagName('img')[0])
+    </script>
+    <div style="text-align:right;font-size: 12px;font-weight : bold;">
+    <apex:outputLabel value=" Total Direct   :  " />
+    <apex:outputText value="{!BLANKVALUE(account.Total_Direct__c, 0.00)}" /> 
+    </div>
+      <apex:pageBlockSection id="section2" collapsible="true" title="Ongoing Direct Exposure" columns="1">
+      <apex:pageBlockTable value="{!loanlist}" var="loan"  >
+      <apex:column headerClass="headerstyle" headerValue="Name" >
+      <apex:outputLink value="/{!loan.id}" target="_blank"> 
+      <apex:outputField value="{!loan.Name}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Ongoing',true,false)}" />
+      </apex:outputLink>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Product" >
+      <apex:outputField value="{!loan.Product__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Ongoing',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Stage" >
+      <apex:outputField value="{!loan.Stage__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Ongoing',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Type" >
+      <apex:outputField value="{!loan.Type__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Ongoing',true,false)}"/>
+      </apex:column>
+            <apex:column headerClass="headerstyle" headerValue="Loan Amount" >
+      <apex:outputField value="{!loan.Loan_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Ongoing',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Exposure Amount" >
+      <apex:outputField value="{!loan.Exposure_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Ongoing',true,false)}"/>
+      </apex:column>     
+      </apex:pageBlockTable>
+      </apex:pageBlockSection>
+    <script>
+        twistSection(document.getElementById('{!$Component.block1.section2}').getElementsByTagName('img')[0])
+    </script>
+    <div style="text-align:right;font-size: 12px;font-weight : bold;">
+    <apex:outputLabel value=" Ongoing Direct   :  " />
+    <apex:outputText value="{!BLANKVALUE(account.Ongoing_Direct__c, 0.00)}" /> 
+    </div>
+      <apex:pageBlockSection id="section3" collapsible="true" title="Booked Direct Exposure" columns="1">
+      <apex:pageBlockTable value="{!loanlist}" var="loan"  >
+      <apex:column headerClass="headerstyle" headerValue="Name" >
+      <apex:outputLink value="/{!loan.id}" target="_blank"> 
+      <apex:outputField value="{!loan.Name}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Book',true,false)}" />
+      </apex:outputLink>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Product" >
+      <apex:outputField value="{!loan.Product__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Book',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Stage" >
+      <apex:outputField value="{!loan.Stage__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Book',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Type" >
+      <apex:outputField value="{!loan.Type__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Book',true,false)}"/>
+      </apex:column>
+            <apex:column headerClass="headerstyle" headerValue="Loan Amount" >
+      <apex:outputField value="{!loan.Loan_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Book',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Exposure Amount" >
+      <apex:outputField value="{!loan.Exposure_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Borrower' && loan.Stage__c == 'Book',true,false)}"/>
+      </apex:column>     
+      </apex:pageBlockTable>
+      </apex:pageBlockSection>
+    <script>
+        twistSection(document.getElementById('{!$Component.block1.section3}').getElementsByTagName('img')[0])
+    </script>
+    <div style="text-align:right;font-size: 12px;font-weight : bold;">
+    <apex:outputLabel value=" Booked Direct   :  " />
+    <apex:outputText value="{!BLANKVALUE(account.Book_Direct__c, 0.00)}" /> 
+    </div>
+    </apex:outputPanel>
+   </apex:pageBlock>  
+   
+      <apex:pageBlock id="block2" title="INDIRECT EXPOSURE">
+      <apex:outputPanel styleClass="grey" layout="block">
+      <apex:pageBlockSection id="section4" collapsible="true" title="Total Indirect Exposure" columns="1" >
+      <apex:pageBlockTable value="{!loanlist}" var="loan" >
+      <apex:column headerClass="headerstyle" headerValue="Name">
+      <apex:outputLink value="/{!loan.id}" target="_blank">   
+      <apex:outputField value="{!loan.Name}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor',true,false)}" /> 
+      </apex:outputLink>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Product" >
+      <apex:outputField value="{!loan.Product__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Stage" >
+      <apex:outputField value="{!loan.Stage__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Type" >
+      <apex:outputField value="{!loan.Type__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Loan Amount" >
+      <apex:outputField value="{!loan.Loan_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Exposure Amount" >
+      <apex:outputField value="{!loan.Exposure_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor',true,false)}"/>
+      </apex:column>     
+      </apex:pageBlockTable>
+      </apex:pageBlockSection>
+    <script>
+        twistSection(document.getElementById('{!$Component.block2.section4}').getElementsByTagName('img')[0])
+    </script>
+    <div style="text-align:right;font-size: 12px;font-weight : bold;">
+    <apex:outputLabel value=" Total InDirect   :  " />
+    <apex:outputText value="{!BLANKVALUE(account.Total_Indirect__c, 0.00)}" /> 
+    </div>
+      <apex:pageBlockSection id="section5" collapsible="true" title="Ongoing Indirect Exposure" columns="1">
+      <apex:pageBlockTable value="{!loanlist}" var="loan" >
+      <apex:column headerClass="headerstyle" headerValue="Name" >
+      <apex:outputLink value="/{!loan.id}" target="_blank"> 
+      <apex:outputField value="{!loan.Name}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Ongoing',true,false)}" />
+      </apex:outputLink>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Product" >
+      <apex:outputField value="{!loan.Product__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Ongoing',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Stage" >
+      <apex:outputField value="{!loan.Stage__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Ongoing',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Type" >
+      <apex:outputField value="{!loan.Type__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Ongoing',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Loan Amount" >
+      <apex:outputField value="{!loan.Loan_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Ongoing',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Exposure Amount" >
+      <apex:outputField value="{!loan.Exposure_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Ongoing',true,false)}"/>
+      </apex:column>     
+      </apex:pageBlockTable>
+      </apex:pageBlockSection>
+    <script>
+        twistSection(document.getElementById('{!$Component.block2.section5}').getElementsByTagName('img')[0])
+    </script>
+    <div style="text-align:right;font-size: 12px;font-weight : bold;">
+    <apex:outputLabel value=" Ongoing Indirect   :  " />
+    <apex:outputText value="{!BLANKVALUE(account.Ongoing_Indirect__c, 0.00)}" />
+    </div>
+    
+      <apex:pageBlockSection id="section6" collapsible="true" title="Booked Indirect Exposure" columns="1">
+      <apex:pageBlockTable value="{!loanlist}" var="loan"  >
+      <apex:column headerClass="headerstyle" headerValue="Name" >
+      <apex:outputLink value="/{!loan.id}" target="_blank"> 
+      <apex:outputField value="{!loan.Name}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Book',true,false)}" />
+      </apex:outputLink>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Product" >
+      <apex:outputField value="{!loan.Product__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Book',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Stage" >
+      <apex:outputField value="{!loan.Stage__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Book',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Type" >
+      <apex:outputField value="{!loan.Type__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Book',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Loan Amount" >
+      <apex:outputField value="{!loan.Loan_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Book',true,false)}"/>
+      </apex:column>
+      <apex:column headerClass="headerstyle" headerValue="Exposure Amount" >
+      <apex:outputField value="{!loan.Exposure_Amount__c}" rendered="{!IF(loan.Borrower_Type__c == 'Guarantor' && loan.Stage__c == 'Book',true,false)}"/> 
+      </apex:column> 
+      </apex:pageBlockTable>
+      </apex:pageBlockSection>
+    <script>
+        twistSection(document.getElementById('{!$Component.block2.section6}').getElementsByTagName('img')[0])
+    </script>
+    
+    <div style="text-align:right;font-size: 12px;font-weight : bold;">
+    <apex:outputLabel value=" Booked Indirect   :  " />
+    <apex:outputText value="{!BLANKVALUE(account.Book_Indirect__c, 0.00)}" />
+    </div>
+     </apex:outputPanel> 
+   </apex:pageBlock> 
+</apex:page>
