@@ -28,15 +28,15 @@
 
     }
 
-  DataApi dataApi = context.getOrg().get().getDataApi();
-    
-   UnitOfWorkBuilder uow = dataApi.newUnitOfWorkBuilder();
+
+    const uow = context.org.dataApi.newUnitOfwork();
+
     
 
     // Define a record using the RecordForCreate type and providing the Developer Name
     const account = uow.registerUpdate(
     {
-        type: Account,
+        type: "Account",
         fields:{
             Id: borrower,
             TotalDirect: TotalDirect,
